@@ -1,0 +1,43 @@
+// variables for color
+$color-white: #fff;
+$color-black: #000;
+$color-gray: #808080;
+$color-gray-dark: #A9A9A9;
+$color-red: #FF0000;
+
+// variables for font-size
+$small-font: 12px;
+$medium-font: 14px;
+$large-font: 16px;
+
+.list-container {
+    margin: 50px;
+    width: 65%;
+
+    table {
+        width:100%;
+        .fa {
+            color: $color-gray;
+            cursor: pointer;
+            font-size: $large-font;
+            font-weight: normal;
+            margin-right: 5px;
+            text-decoration: none;
+        }
+        .fa-pencil {
+            &:before {
+                content: "\f040";
+            }
+        }
+        .fa-trash {
+            &:before {
+                content: "\f1f8";
+            }
+        }
+    }
+
+    .btn-info {
+        float: right;
+        margin-top: 17px;
+    }
+}

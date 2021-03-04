@@ -1,0 +1,83 @@
+<div class="list-container">
+  <h5>
+    Seller List
+  </h5>
+
+  <mat-form-field style="width: 50%">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Raj" #input>
+  </mat-form-field>
+  <button class="btn btn-sm btn-info" (click)="addSeller()" title="Add Seller">
+    Add Seller
+  </button>
+  <button class="btn btn-sm btn-info" style="float:right; margin-right: 5px" *ngIf="selection.hasValue()"
+    (click)="deleteMultipleRecord()" title="Delete Multi-record">
+    Delete
+  </button>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- sellerName Column -->
+      <ng-container matColumnDef="sellerName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.sellerName}} </td>
+      </ng-container>
+
+      <!-- currencies Column -->
+      <ng-container matColumnDef="currencies">
+        <th mat-header-cell *matHeaderCellDef> Currencies </th>
+        <td mat-cell *matCellDef="let element"> {{element.currencies}} </td>
+      </ng-container>
+
+      <!-- offices Column -->
+      <ng-container matColumnDef="offices">
+        <th mat-header-cell *matHeaderCellDef> Offices </th>
+        <td mat-cell *matCellDef="let element"> {{element.offices}} </td>
+      </ng-container>
+
+      <!-- biddedDeals Column -->
+      <ng-container matColumnDef="biddedDeals">
+        <th mat-header-cell *matHeaderCellDef> Bidded Deals </th>
+        <td mat-cell *matCellDef="let element"> {{element.biddedDeals ? 'Yes' : 'No'}} </td>
+      </ng-container>
+
+      <!-- gauranteedDeals Column -->
+      <ng-container matColumnDef="gauranteedDeals">
+        <th mat-header-cell *matHeaderCellDef> Gauranteed Deals </th>
+        <td mat-cell *matCellDef="let element"> {{element.gauranteedDeals ? 'Yes' : 'No'}} </td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element" class="action-link">
+          <a (click)="deleteRecord(element)" class="fa fa-trash" title="Delete"></a>
+          <a routerLink="/seller/edit/{{element.id}}" routerLinkActive="active" class="fa fa-pencil" title="Edit"></a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+</div>

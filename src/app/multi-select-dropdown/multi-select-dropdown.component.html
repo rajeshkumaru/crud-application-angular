@@ -1,0 +1,15 @@
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false">
+    <span>
+      {{vo[fieldName].length ? vo[fieldName].join(',') : ''}}
+    </span>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" *ngFor="let option of fieldName == 'offices' ? officeOptions : currencyOptions">
+      <input type="checkbox" (click)="selectOption(option, fieldName)"
+      [ngModel]="vo[fieldName].indexOf(option) > -1" />
+      {{option}}
+    </a>
+  </div>
+</div>

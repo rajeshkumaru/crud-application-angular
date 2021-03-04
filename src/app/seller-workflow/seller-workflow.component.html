@@ -1,0 +1,91 @@
+<div class="form-container">
+  <h5 class="title">Seller Form</h5>
+
+  <form [formGroup]="sellerForm">
+    <div class="form-group" style="display: none;">
+      <label for="id">
+        id
+      </label>
+      <input class="form-control" type="text" id="id" formControlName="id">
+    </div>
+
+    <div class="form-group">
+      <label for="sellerName">
+        Seller Name*
+      </label>
+      <input class="form-control" type="text" id="sellerName" formControlName="sellerName" required>
+      <span class="error" *ngIf="showNameValidationError">
+        Name is Required!
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label>
+        Currencies*
+      </label>
+      <app-multi-select-dropdown [vo]="sellerForm.value" [fieldName]="currencyField">
+      </app-multi-select-dropdown>
+      <span class="error" *ngIf="showCurrencyValidationError">Currency is Required! </span>
+    </div>
+
+    <div class="form-group">
+      <label>
+        Offices*
+      </label>
+      <app-multi-select-dropdown [vo]="sellerForm.value" [fieldName]="officeField">
+      </app-multi-select-dropdown>
+      <span class="error" *ngIf="showOfficeValidationError">Office Location is Required! </span>
+    </div>
+
+    <div class="form-group deal-type-group">
+      <label class="deal-type">Deal Type *</label>
+      <div class="checkbox-group">
+        <!-- Default inline 1-->
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input type="checkbox" class="custom-control-input" id="defaultInline1" [formControl]="sellerForm.controls['biddedDeals']">
+          <label class="custom-control-label" for="defaultInline1">Bidded</label>
+        </div>
+
+        <!-- Default inline 2-->
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input type="checkbox" class="custom-control-input" id="defaultInline2"
+          [formControl]="sellerForm.controls['gauranteedDeals']">
+          <label class="custom-control-label" for="defaultInline2">Gauranteed</label>
+        </div>
+      </div>
+      <span class="error" *ngIf="!sellerForm.value.biddedDeals && !sellerForm.value.gauranteedDeals">Deal Type is Required!
+      </span>
+    </div>
+    <div class="form-group">
+      <label>
+        Seller Activation Date
+      </label>
+      <input class="form-control" type="date" min="{{currentDate}}" formControlName="sellerActivationDate">
+    </div>
+
+    <div class="form-group">
+      <label>
+        Contact Name
+      </label>
+      <input class="form-control" type="text" formControlName="contactName">
+    </div>
+
+    <div class="form-group">
+      <label>
+        Email
+      </label>
+      <input class="form-control" type="text" formControlName="email">
+      <span class="error" [hidden]="!(sellerForm.controls['email'].dirty && sellerForm.controls['email'].invalid)">Please
+        Enter a Valid Email</span>
+    </div>
+  </form>
+
+  <div class="btn-container">
+    <button class="btn btn-sm btn-cancel" (click)="cancel()">Cancel</button>
+    <button (click)="saveRecord()"
+      class="btn btn-sm btn-info"
+      [disabled]="(!sellerForm.value.biddedDeals && !sellerForm.value.gauranteedDeals) || (sellerForm.controls['email'].dirty && sellerForm.controls['email'].invalid)">
+      Save
+    </button>
+  </div>
+</div>
